@@ -3,334 +3,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SciSpark | Learn. Practise. Excel.</title>
-
+<title>SciSpark | Explore Science</title>
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f8fc;
-    color: #183047;
-}
-
-header {
-    background: #102d46;
-    color: white;
-    padding: 22px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 27px;
-    font-weight: bold;
-}
-
-.logo span {
-    color: #52d6a0;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 18px;
-    font-size: 14px;
-}
-
-.hero {
-    background: linear-gradient(135deg, #102d46, #176b78);
-    color: white;
-    text-align: center;
-    padding: 75px 20px;
-}
-
-.hero h1 {
-    font-size: 42px;
-    margin-bottom: 15px;
-}
-
-.hero p {
-    font-size: 17px;
-    margin-bottom: 25px;
-    color: #dcecf1;
-}
-
-.btn {
-    display: inline-block;
-    background: #52d6a0;
-    color: #102d46;
-    padding: 13px 25px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-}
-
-section {
-    padding: 45px 7%;
-    text-align: center;
-}
-
-section h2 {
-    font-size: 28px;
-    margin-bottom: 12px;
-}
-
-.subtitle {
-    color: #66798a;
-    margin-bottom: 28px;
-}
-
-.classes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 17px;
-}
-
-.class-card {
-    background: white;
-    padding: 25px 12px;
-    border-radius: 12px;
-    border: 1px solid #dce6ed;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.class-card:hover {
-    transform: translateY(-4px);
-    border-color: #35b987;
-}
-
-.class-card h3 {
-    color: #167b70;
-    font-size: 23px;
-    margin-bottom: 8px;
-}
-
-.class-card p {
-    font-size: 13px;
-    color: #66798a;
-}
-
-#practice {
-    display: none;
-    background: white;
-    border-radius: 14px;
-    max-width: 650px;
-    margin: 25px auto;
-    padding: 25px;
-    text-align: left;
-}
-
-.option {
-    display: block;
-    width: 100%;
-    padding: 13px;
-    margin: 10px 0;
-    background: #f1f6fa;
-    border: 1px solid #dce6ed;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: left;
-}
-
-.option:hover {
-    background: #e0f5ed;
-}
-
-#result {
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-.membership {
-    background: #e4f5ef;
-    border-radius: 15px;
-    padding: 35px 20px;
-}
-
-.price {
-    font-size: 38px;
-    color: #167b70;
-    font-weight: bold;
-    margin: 15px;
-}
-
-footer {
-    background: #102d46;
-    color: white;
-    text-align: center;
-    padding: 25px;
-    font-size: 13px;
-}
-
-@media(max-width:600px) {
-    .hero h1 {
-        font-size: 32px;
-    }
-
-    nav a {
-        margin-left: 8px;
-    }
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f2f7f6;color:#183b3b;line-height:1.6}
+header{background:#103c3b;color:white;padding:20px 7%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.logo{font-size:27px;font-weight:bold}
+.logo span{color:#8de0c5}
+header p{font-size:13px;color:#d1e7e2}
+.hero{background:linear-gradient(135deg,#103c3b,#176c65);color:white;text-align:center;padding:65px 20px}
+.hero h1{font-size:clamp(30px,6vw,48px);margin-bottom:12px}
+.hero p{max-width:600px;margin:auto;color:#d9efea}
+.section{max-width:1050px;margin:45px auto;padding:0 20px}
+.section h2{text-align:center;font-size:28px;margin-bottom:10px}
+.intro{text-align:center;color:#607776;margin-bottom:28px}
+.classes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px}
+.class-card{background:white;border:1px solid #dce9e5;border-radius:15px;padding:25px 15px;text-align:center;box-shadow:0 5px 18px #14463c0f}
+.class-card h3{font-size:22px;margin-bottom:7px}
+.class-card p{color:#718482;font-size:14px;margin-bottom:17px}
+button{border:0;border-radius:8px;padding:12px 20px;background:#14796d;color:white;font-size:15px;font-weight:bold;cursor:pointer}
+button:hover{background:#0d5c54}
+#quizSection,#result{display:none;max-width:760px;margin:35px auto;padding:25px 20px}
+.quiz-box,.result-box{background:white;padding:25px;border-radius:15px;box-shadow:0 5px 20px #14463c14}
+.quiz-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#50716d;font-weight:bold;margin-bottom:15px}
+.progress{height:8px;background:#e5efec;border-radius:20px;margin-bottom:25px;overflow:hidden}
+.progress-fill{height:100%;width:10%;background:#22a58e;transition:width .2s}
+#question{font-size:21px;margin-bottom:20px}
+.options{display:grid;gap:12px}
+.option{background:#f3f8f6;color:#244442;border:1px solid #d8e7e1;text-align:left;font-weight:normal;width:100%}
+.option.selected{background:#d9f2e9;border:2px solid #168b72}
+.quiz-actions{display:flex;justify-content:space-between;gap:10px;margin-top:25px}
+.score{text-align:center;font-size:34px;color:#14796d;font-weight:bold;margin:12px 0}
+.review-item{border-top:1px solid #e1ebe7;padding:17px 0}
+.correct{color:#16834f;font-weight:bold}
+.incorrect{color:#bd4b43;font-weight:bold}
+.explanation{color:#607776;margin-top:5px}
+.secondary{background:#647c79}
+footer{background:#103c3b;color:#d1e7e2;text-align:center;padding:25px;margin-top:50px;font-size:14px}
+@media(max-width:500px){.quiz-box,.result-box{padding:18px}#question{font-size:19px}.quiz-actions button{padding:11px 14px}}
 </style>
 </head>
-
 <body>
-
 <header>
-    <div class="logo">Sci<span>Spark</span> 🧪</div>
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#classes">Classes</a>
-        <a href="#membership">Membership</a>
-    </nav>
+<div class="logo">Sci<span>Spark</span></div>
+<p>Discover. Learn. Explore.</p>
 </header>
 
-<div class="hero" id="home">
-    <h1>Learn. Practise. Excel.</h1>
-    <p>Make science easier with interactive practice and quizzes.</p>
-    <a href="#classes" class="btn">Start Practising</a>
-</div>
-
-<section id="classes">
-    <h2>Choose Your Class</h2>
-    <p class="subtitle">Select your class to explore science practice.</p>
-
-    <div class="classes">
-        <div class="class-card" onclick="startQuiz(4)">
-            <h3>Class 4</h3>
-            <p>Explore Science</p>
-        </div>
-
-        <div class="class-card" onclick="startQuiz(5)">
-            <h3>Class 5</h3>
-            <p>Explore Science</p>
-        </div>
-
-        <div class="class-card" onclick="startQuiz(6)">
-            <h3>Class 6</h3>
-            <p>Explore Science</p>
-        </div>
-
-        <div class="class-card" onclick="startQuiz(7)">
-            <h3>Class 7</h3>
-            <p>Explore Science</p>
-        </div>
-
-        <div class="class-card" onclick="startQuiz(8)">
-            <h3>Class 8</h3>
-            <p>Explore Science</p>
-        </div>
-    </div>
-
-    <div id="practice">
-        <h2 id="quizTitle">Science Practice</h2>
-        <p id="question" style="margin:20px 0;"></p>
-        <div id="options"></div>
-        <p id="result"></p>
-        <button class="btn" onclick="closeQuiz()" style="margin-top:20px;">
-            Back to Classes
-        </button>
-    </div>
+<section class="hero">
+<h1>Let Curiosity Lead the Way!</h1>
+<p>Explore the fascinating world of science, test your knowledge and learn something new every day.</p>
 </section>
 
-<section id="membership">
-    <div class="membership">
-        <h2>Unlock More Science Practice</h2>
-        <p>Explore more questions, chapter tests and explanations.</p>
-        <div class="price">₹49</div>
-        <p>Proposed membership · 30 days</p>
-        <p style="margin-top:15px;font-size:13px;">
-            Membership coming soon!
-        </p>
-    </div>
+<section class="section" id="home">
+<h2>Choose Your Class</h2>
+<p class="intro">Select your class to begin your science quiz.</p>
+<div class="classes">
+<div class="class-card"><h3>Class 4</h3><p>10 Science Questions</p><button onclick="startQuiz(4)">Start Quiz</button></div>
+<div class="class-card"><h3>Class 5</h3><p>10 Science Questions</p><button onclick="startQuiz(5)">Start Quiz</button></div>
+<div class="class-card"><h3>Class 6</h3><p>10 Science Questions</p><button onclick="startQuiz(6)">Start Quiz</button></div>
+<div class="class-card"><h3>Class 7</h3><p>10 Science Questions</p><button onclick="startQuiz(7)">Start Quiz</button></div>
+</div>
+</section>
+
+<section id="quizSection">
+<div class="quiz-box">
+<div class="quiz-top"><span id="classLabel">Class 4</span><span id="questionCount">Question 1 of 10</span></div>
+<div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+<h3 id="question"></h3>
+<div class="options" id="options"></div>
+<div class="quiz-actions">
+<button class="secondary" onclick="goHome()">Exit Quiz</button>
+<button id="nextButton" onclick="nextQuestion()">Next</button>
+</div>
+</div>
+</section>
+
+<section id="result">
+<div class="result-box">
+<h2 style="text-align:center">Quiz Completed!</h2>
+<p style="text-align:center">Your score is</p>
+<div class="score" id="score"></div>
+<p id="resultMessage" style="text-align:center;margin-bottom:20px"></p>
+<h3 style="margin-bottom:15px">Answer Review</h3>
+<div id="review"></div>
+<div style="text-align:center;margin-top:25px"><button onclick="goHome()">Back to Classes</button></div>
+</div>
 </section>
 
 <footer>
-    <p>© 2026 SciSpark. Learn. Practise. Excel.</p>
-    <p style="margin-top:8px;">A place where curiosity meets science.</p>
+<p><strong>SciSpark</strong> — Making Science Fun and Interesting.</p>
+<p>Learn something new. Every single day.</p>
 </footer>
 
 <script>
 const questions = {
-    4: {
-        q: "Which part of a plant absorbs water from the soil?",
-        options: ["Leaves", "Roots", "Flowers", "Fruits"],
-        answer: 1
-    },
-    5: {
-        q: "Which planet is known as the Red Planet?",
-        options: ["Earth", "Venus", "Mars", "Jupiter"],
-        answer: 2
-    },
-    6: {
-        q: "Which gas do plants absorb during photosynthesis?",
-        options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
-        answer: 2
-    },
-    7: {
-        q: "Which organ pumps blood throughout the human body?",
-        options: ["Lungs", "Heart", "Brain", "Kidneys"],
-        answer: 1
-    },
-    8: {
-        q: "What is the SI unit of force?",
-        options: ["Joule", "Watt", "Newton", "Pascal"],
-        answer: 2
-    }
+4: [
+{q:"Which part of a plant absorbs water from the soil?",o:["Leaves","Roots","Flowers","Fruits"],a:1,e:"Roots absorb water and minerals from the soil."},
+{q:"Which organ helps humans breathe?",o:["Heart","Stomach","Lungs","Brain"],a:2,e:"Lungs help us breathe."},
+{q:"Which of these animals is a herbivore?",o:["Lion","Tiger","Deer","Wolf"],a:2,e:"Deer eat plants, so they are herbivores."},
+{q:"What is the main source of energy for Earth?",o:["Moon","Sun","Stars","Wind"],a:1,e:"The Sun is Earth's main natural source of energy."},
+{q:"Which of these materials is transparent?",o:["Wood","Cardboard","Clear glass","Stone"],a:2,e:"Clear glass allows light to pass through it."},
+{q:"Which sense organ helps us hear sounds?",o:["Eyes","Ears","Nose","Tongue"],a:1,e:"Our ears help us hear sounds."},
+{q:"What happens when water freezes?",o:["It becomes steam","It becomes ice","It disappears","It becomes air"],a:1,e:"Water changes into solid ice when it freezes."},
+{q:"Which is a natural source of water?",o:["Plastic bottle","Tap","River","Bucket"],a:2,e:"A river is a natural source of water."},
+{q:"Which part of a plant prepares food?",o:["Root","Leaf","Flower","Fruit"],a:1,e:"Leaves prepare food through photosynthesis."},
+{q:"Which action helps keep the environment clean?",o:["Cutting trees","Throwing waste on roads","Planting trees","Wasting water"],a:2,e:"Planting trees helps keep the environment healthy."}
+],
+5: [
+{q:"What is the process by which green plants prepare food?",o:["Respiration","Photosynthesis","Digestion","Transpiration"],a:1,e:"Green plants prepare food through photosynthesis."},
+{q:"Which organ pumps blood throughout the body?",o:["Lungs","Brain","Heart","Kidneys"],a:2,e:"The heart pumps blood throughout the body."},
+{q:"Which of these is a renewable source of energy?",o:["Coal","Petroleum","Solar energy","Natural gas"],a:2,e:"Solar energy is renewable because sunlight is naturally replenished."},
+{q:"What is the boiling point of water at normal atmospheric pressure?",o:["0°C","50°C","100°C","150°C"],a:2,e:"Water boils at 100°C at normal atmospheric pressure."},
+{q:"Which nutrient helps in the growth and repair of the body?",o:["Proteins","Fats","Water","Carbohydrates"],a:0,e:"Proteins help the body grow and repair its tissues."},
+{q:"Which planet is known as the Red Planet?",o:["Venus","Mars","Jupiter","Mercury"],a:1,e:"Mars appears reddish because of iron-rich dust."},
+{q:"What is the change of water vapour into liquid water called?",o:["Evaporation","Freezing","Condensation","Melting"],a:2,e:"Condensation changes water vapour into liquid water."},
+{q:"Which part of the skeleton protects the brain?",o:["Rib cage","Skull","Backbone","Pelvis"],a:1,e:"The skull surrounds and protects the brain."},
+{q:"Which of these is a good conductor of electricity?",o:["Rubber","Plastic","Copper","Wood"],a:2,e:"Copper allows electric current to pass through it easily."},
+{q:"Which organisms act as decomposers?",o:["Fungi and bacteria","Birds and fish","Trees and grass","Insects and reptiles"],a:0,e:"Fungi and bacteria break down dead plants and animals."}
+],
+
+6: [
+{q:"Which method is used to separate sand from water?",o:["Evaporation","Filtration","Churning","Handpicking"],a:1,e:"Filtration separates insoluble sand from water."},
+{q:"What does a balanced diet contain?",o:["Only proteins","Only carbohydrates","All essential nutrients in suitable amounts","Only fats and vitamins"],a:2,e:"A balanced diet contains all essential nutrients in suitable amounts."},
+{q:"Which plant part carries water from roots towards leaves?",o:["Flower","Stem","Fruit","Seed"],a:1,e:"The stem carries water and minerals from the roots to other plant parts."},
+{q:"Which of these is a reversible change?",o:["Burning paper","Rusting iron","Melting ice","Cooking food"],a:2,e:"Melted ice can be frozen again to form ice."},
+{q:"What is the SI unit of length?",o:["Kilogram","Metre","Second","Litre"],a:1,e:"The SI unit of length is the metre."},
+{q:"Which component supplies electrical energy in a simple circuit?",o:["Bulb","Switch","Cell","Wire"],a:2,e:"An electric cell supplies energy to a simple circuit."},
+{q:"Which gas is necessary for burning?",o:["Nitrogen","Oxygen","Carbon dioxide","Hydrogen"],a:1,e:"Oxygen supports the process of burning."},
+{q:"Which type of joint is found in the shoulder?",o:["Hinge joint","Fixed joint","Ball-and-socket joint","Pivot joint"],a:2,e:"A ball-and-socket joint allows movement in many directions."},
+{q:"Which of these is a natural fibre?",o:["Nylon","Polyester","Cotton","Acrylic"],a:2,e:"Cotton is a natural fibre obtained from plants."},
+{q:"Why are we able to see objects?",o:["Objects produce sound","Light reflected from objects enters our eyes","Our eyes produce light","Objects always glow"],a:1,e:"We see objects when light reflected from them enters our eyes."}
+],
+7: [
+{q:"Which plant tissue transports water and minerals?",o:["Phloem","Xylem","Epidermis","Cortex"],a:1,e:"Xylem transports water and minerals from roots to other parts of the plant."},
+{q:"Which of these is a chemical change?",o:["Melting ice","Tearing paper","Rusting iron","Breaking glass"],a:2,e:"Rusting forms a new substance called rust, so it is a chemical change."},
+{q:"Which instrument is used to measure temperature?",o:["Barometer","Thermometer","Ammeter","Speedometer"],a:1,e:"A thermometer is used to measure temperature."},
+{q:"Which gas is released during photosynthesis?",o:["Nitrogen","Oxygen","Carbon dioxide","Hydrogen"],a:1,e:"Oxygen is released by green plants during photosynthesis."},
+{q:"What is the SI unit of electric current?",o:["Volt","Ohm","Ampere","Watt"],a:2,e:"Ampere is the SI unit of electric current."},
+{q:"Which blood cells help fight infections?",o:["Red blood cells","White blood cells","Platelets","Plasma"],a:1,e:"White blood cells help protect the body against infections."},
+{q:"Which of these is a good conductor of heat?",o:["Wood","Plastic","Copper","Rubber"],a:2,e:"Copper is a good conductor of heat."},
+{q:"Which part of the brain controls balance and coordination?",o:["Cerebrum","Cerebellum","Medulla","Spinal cord"],a:1,e:"The cerebellum helps control balance and coordination."},
+{q:"Which of these is acidic?",o:["Soap solution","Lemon juice","Baking soda solution","Lime water"],a:1,e:"Lemon juice contains citric acid."},
+{q:"A metal spoon becomes hot when left in hot tea. Which process transfers heat through it?",o:["Convection","Radiation","Conduction","Evaporation"],a:2,e:"Conduction transfers heat through a solid metal spoon."}
+]
 };
 
-function startQuiz(classNumber) {
-    const data = questions[classNumber];
+let currentClass=4;
+let currentQuestion=0;
+let selectedAnswers=[];
+let quizQuestions=[];
 
-    document.getElementById("practice").style.display = "block";
-    document.getElementById("quizTitle").textContent =
-        "Class " + classNumber + " Science Sample Quiz";
-
-    document.getElementById("question").textContent = data.q;
-    document.getElementById("result").textContent = "";
-
-    const options = document.getElementById("options");
-    options.innerHTML = "";
-
-    data.options.forEach((option, index) => {
-        const button = document.createElement("button");
-        button.className = "option";
-        button.textContent = option;
-
-        button.onclick = function() {
-            if (index === data.answer) {
-                document.getElementById("result").textContent =
-                    "Correct! Excellent work!";
-            } else {
-                document.getElementById("result").textContent =
-                    "Not quite! Try again.";
-            }
-        };
-
-        options.appendChild(button);
-    });
-
-    document.getElementById("practice").scrollIntoView({
-        behavior: "smooth"
-    });
+function startQuiz(classNumber){
+ currentClass=classNumber;
+ quizQuestions=questions[classNumber];
+ currentQuestion=0;
+ selectedAnswers=new Array(quizQuestions.length).fill(null);
+ document.getElementById("home").style.display="none";
+ document.getElementById("quizSection").style.display="block";
+ document.getElementById("result").style.display="none";
+ document.getElementById("classLabel").textContent="Class "+classNumber;
+ showQuestion();
+ window.scrollTo(0,0);
 }
 
-function closeQuiz() {
-    document.getElementById("practice").style.display = "none";
-    document.getElementById("classes").scrollIntoView({
-        behavior: "smooth"
-    });
+function showQuestion(){
+ const item=quizQuestions[currentQuestion];
+ document.getElementById("questionCount").textContent="Question "+(currentQuestion+1)+" of "+quizQuestions.length;
+ document.getElementById("question").textContent=item.q;
+ document.getElementById("progressFill").style.width=((currentQuestion+1)/quizQuestions.length*100)+"%";
+ const options=document.getElementById("options");
+ options.innerHTML="";
+ item.o.forEach((option,index)=>{
+  const button=document.createElement("button");
+  button.className="option"+(selectedAnswers[currentQuestion]===index?" selected":"");
+  button.textContent=String.fromCharCode(65+index)+". "+option;
+  button.onclick=()=>selectOption(index);
+  options.appendChild(button);
+ });
+ document.getElementById("nextButton").textContent=currentQuestion===quizQuestions.length-1?"Submit Quiz":"Next";
+}
+
+function selectOption(index){
+ selectedAnswers[currentQuestion]=index;
+ showQuestion();
+}
+
+function nextQuestion(){
+ if(selectedAnswers[currentQuestion]===null){
+  alert("Please select an answer first.");
+  return;
+ }
+ if(currentQuestion<quizQuestions.length-1){
+  currentQuestion++;
+  showQuestion();
+ }else{
+  showResult();
+ }
+}
+
+function showResult(){
+ document.getElementById("quizSection").style.display="none";
+ document.getElementById("result").style.display="block";
+
+ let score=0;
+ quizQuestions.forEach((item,index)=>{
+  if(selectedAnswers[index]===item.a) score++;
+ });
+
+ document.getElementById("score").textContent=score+" / "+quizQuestions.length;
+
+ let message="";
+ if(score===10) message="Excellent! Perfect score!";
+ else if(score>=7) message="Great work! Keep learning!";
+ else if(score>=5) message="Good effort! You are improving!";
+ else message="Keep practising. You can do better next time!";
+
+ document.getElementById("resultMessage").textContent=message;
+
+ const review=document.getElementById("review");
+ review.innerHTML="";
+
+ quizQuestions.forEach((item,index)=>{
+  const chosen=selectedAnswers[index];
+  const correct=chosen===item.a;
+
+  const div=document.createElement("div");
+  div.className="review-item";
+
+  const heading=document.createElement("h4");
+  heading.textContent=(index+1)+". "+item.q;
+
+  const status=document.createElement("p");
+  status.className=correct?"correct":"incorrect";
+  status.textContent=correct?"Correct!":"Incorrect";
+
+  const yourAnswer=document.createElement("p");
+  yourAnswer.textContent="Your answer: "+(chosen===null?"Not answered":item.o[chosen]);
+
+  const rightAnswer=document.createElement("p");
+  rightAnswer.textContent="Correct answer: "+item.o[item.a];
+
+  const explanation=document.createElement("p");
+  explanation.className="explanation";
+  explanation.textContent="Explanation: "+item.e;
+
+  div.appendChild(heading);
+  div.appendChild(status);
+  div.appendChild(yourAnswer);
+  div.appendChild(rightAnswer);
+  div.appendChild(explanation);
+
+  review.appendChild(div);
+ });
+
+ window.scrollTo(0,0);
+}
+
+function goHome(){
+ document.getElementById("home").style.display="block";
+ document.getElementById("quizSection").style.display="none";
+ document.getElementById("result").style.display="none";
+ window.scrollTo(0,0);
 }
 </script>
-
 </body>
 </html>
+   
