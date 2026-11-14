@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SciSpark | Learn. Practise. Excel.</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f8fc;
+    color: #183047;
+}
+
+header {
+    background: #102d46;
+    color: white;
+    padding: 22px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #52d6a0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 18px;
+    font-size: 14px;
+}
+
+.hero {
+    background: linear-gradient(135deg, #102d46, #176b78);
+    color: white;
+    text-align: center;
+    padding: 75px 20px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 17px;
+    margin-bottom: 25px;
+    color: #dcecf1;
+}
+
+.btn {
+    display: inline-block;
+    background: #52d6a0;
+    color: #102d46;
+    padding: 13px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+section {
+    padding: 45px 7%;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #66798a;
+    margin-bottom: 28px;
+}
+
+.classes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 17px;
+}
+
+.class-card {
+    background: white;
+    padding: 25px 12px;
+    border-radius: 12px;
+    border: 1px solid #dce6ed;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.class-card:hover {
+    transform: translateY(-4px);
+    border-color: #35b987;
+}
+
+.class-card h3 {
+    color: #167b70;
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.class-card p {
+    font-size: 13px;
+    color: #66798a;
+}
+
+#practice {
+    display: none;
+    background: white;
+    border-radius: 14px;
+    max-width: 650px;
+    margin: 25px auto;
+    padding: 25px;
+    text-align: left;
+}
+
+.option {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0;
+    background: #f1f6fa;
+    border: 1px solid #dce6ed;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.option:hover {
+    background: #e0f5ed;
+}
+
+#result {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.membership {
+    background: #e4f5ef;
+    border-radius: 15px;
+    padding: 35px 20px;
+}
+
+.price {
+    font-size: 38px;
+    color: #167b70;
+    font-weight: bold;
+    margin: 15px;
+}
+
+footer {
+    background: #102d46;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    font-size: 13px;
+}
+
+@media(max-width:600px) {
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    nav a {
+        margin-left: 8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Sci<span>Spark</span> 🧪</div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#classes">Classes</a>
+        <a href="#membership">Membership</a>
+    </nav>
+</header>
+
+<div class="hero" id="home">
+    <h1>Learn. Practise. Excel.</h1>
+    <p>Make science easier with interactive practice and quizzes.</p>
+    <a href="#classes" class="btn">Start Practising</a>
+</div>
+
+<section id="classes">
+    <h2>Choose Your Class</h2>
+    <p class="subtitle">Select your class to explore science practice.</p>
+
+    <div class="classes">
+        <div class="class-card" onclick="startQuiz(4)">
+            <h3>Class 4</h3>
+            <p>Explore Science</p>
+        </div>
+
+        <div class="class-card" onclick="startQuiz(5)">
+            <h3>Class 5</h3>
+            <p>Explore Science</p>
+        </div>
+
+        <div class="class-card" onclick="startQuiz(6)">
+            <h3>Class 6</h3>
+            <p>Explore Science</p>
+        </div>
+
+        <div class="class-card" onclick="startQuiz(7)">
+            <h3>Class 7</h3>
+            <p>Explore Science</p>
+        </div>
+
+        <div class="class-card" onclick="startQuiz(8)">
+            <h3>Class 8</h3>
+            <p>Explore Science</p>
+        </div>
+    </div>
+
+    <div id="practice">
+        <h2 id="quizTitle">Science Practice</h2>
+        <p id="question" style="margin:20px 0;"></p>
+        <div id="options"></div>
+        <p id="result"></p>
+        <button class="btn" onclick="closeQuiz()" style="margin-top:20px;">
+            Back to Classes
+        </button>
+    </div>
+</section>
+
+<section id="membership">
+    <div class="membership">
+        <h2>Unlock More Science Practice</h2>
+        <p>Explore more questions, chapter tests and explanations.</p>
+        <div class="price">₹49</div>
+        <p>Proposed membership · 30 days</p>
+        <p style="margin-top:15px;font-size:13px;">
+            Membership coming soon!
+        </p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 SciSpark. Learn. Practise. Excel.</p>
+    <p style="margin-top:8px;">A place where curiosity meets science.</p>
+</footer>
+
+<script>
+const questions = {
+    4: {
+        q: "Which part of a plant absorbs water from the soil?",
+        options: ["Leaves", "Roots", "Flowers", "Fruits"],
+        answer: 1
+    },
+    5: {
+        q: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Venus", "Mars", "Jupiter"],
+        answer: 2
+    },
+    6: {
+        q: "Which gas do plants absorb during photosynthesis?",
+        options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+        answer: 2
+    },
+    7: {
+        q: "Which organ pumps blood throughout the human body?",
+        options: ["Lungs", "Heart", "Brain", "Kidneys"],
+        answer: 1
+    },
+    8: {
+        q: "What is the SI unit of force?",
+        options: ["Joule", "Watt", "Newton", "Pascal"],
+        answer: 2
+    }
+};
+
+function startQuiz(classNumber) {
+    const data = questions[classNumber];
+
+    document.getElementById("practice").style.display = "block";
+    document.getElementById("quizTitle").textContent =
+        "Class " + classNumber + " Science Sample Quiz";
+
+    document.getElementById("question").textContent = data.q;
+    document.getElementById("result").textContent = "";
+
+    const options = document.getElementById("options");
+    options.innerHTML = "";
+
+    data.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.textContent = option;
+
+        button.onclick = function() {
+            if (index === data.answer) {
+                document.getElementById("result").textContent =
+                    "Correct! Excellent work!";
+            } else {
+                document.getElementById("result").textContent =
+                    "Not quite! Try again.";
+            }
+        };
+
+        options.appendChild(button);
+    });
+
+    document.getElementById("practice").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+function closeQuiz() {
+    document.getElementById("practice").style.display = "none";
+    document.getElementById("classes").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+</script>
+
+</body>
+</html>
