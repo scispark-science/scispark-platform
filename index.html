@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SciSpark | Explore Science</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:#f2f7f6;color:#183b3b;line-height:1.6}
@@ -23,6 +24,7 @@ header p{font-size:13px;color:#d1e7e2}
 .class-card p{color:#718482;font-size:14px;margin-bottom:17px}
 button{border:0;border-radius:8px;padding:12px 20px;background:#14796d;color:white;font-size:15px;font-weight:bold;cursor:pointer}
 button:hover{background:#0d5c54}
+button:disabled{opacity:.6;cursor:not-allowed}
 #quizSection,#result{display:none;max-width:760px;margin:35px auto;padding:25px 20px}
 .quiz-box,.result-box{background:white;padding:25px;border-radius:15px;box-shadow:0 5px 20px #14463c14}
 .quiz-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#50716d;font-weight:bold;margin-bottom:15px}
@@ -39,8 +41,26 @@ button:hover{background:#0d5c54}
 .incorrect{color:#bd4b43;font-weight:bold}
 .explanation{color:#607776;margin-top:5px}
 .secondary{background:#647c79}
+.account-wrap{max-width:760px;margin:35px auto;padding:0 20px}
+.account-box,.premium-box{background:white;border:1px solid #dce9e5;border-radius:15px;padding:24px;box-shadow:0 5px 18px #14463c0f}
+.account-box h2,.premium-box h2{text-align:center;margin-bottom:8px}
+.account-note{text-align:center;color:#607776;font-size:14px;margin-bottom:18px}
+.auth-tabs{display:flex;justify-content:center;gap:10px;margin-bottom:18px}
+.auth-tabs button{min-width:120px}
+.auth-tabs .secondary{background:#647c79}
+.auth-form{max-width:430px;margin:auto}
+.auth-form label{display:block;font-weight:bold;margin:12px 0 5px}
+.auth-form input{width:100%;padding:12px;border:1px solid #cbdcd6;border-radius:8px;font-size:16px}
+.auth-form button{width:100%;margin-top:16px}
+#authMessage,#accountStatus{margin-top:13px;text-align:center;font-size:14px;color:#526d68;overflow-wrap:anywhere}
+#signedInPanel{display:none;text-align:center}
+#signedInPanel button{margin-top:12px}
+.premium-box{margin-top:20px;text-align:center}
+.premium-box p{color:#607776;margin:8px 0 16px}
+#premiumMessage{font-weight:bold;color:#14796d}
+#premiumContent{display:none;margin-top:14px;padding:14px;background:#f3f8f6;border-radius:9px}
 footer{background:#103c3b;color:#d1e7e2;text-align:center;padding:25px;margin-top:50px;font-size:14px}
-@media(max-width:500px){.quiz-box,.result-box{padding:18px}#question{font-size:19px}.quiz-actions button{padding:11px 14px}}
+@media(max-width:500px){.quiz-box,.result-box{padding:18px}#question{font-size:19px}.quiz-actions button{padding:11px 14px}.account-box,.premium-box{padding:18px}}
 </style>
 </head>
 <body>
@@ -52,6 +72,41 @@ footer{background:#103c3b;color:#d1e7e2;text-align:center;padding:25px;margin-to
 <section class="hero">
 <h1>Let Curiosity Lead the Way!</h1>
 <p>Explore the fascinating world of science, test your knowledge and learn something new every day.</p>
+</section>
+
+<section class="account-wrap" id="accountSection">
+<div class="account-box">
+<h2>Student Account</h2>
+<p class="account-note">Free quizzes are available without an account. Sign in is only needed for Premium features.</p>
+
+<div id="authForms">
+<div class="auth-tabs">
+<button type="button" id="showLoginButton" onclick="showAuthForm('login')">Log In</button>
+<button type="button" id="showSignupButton" class="secondary" onclick="showAuthForm('signup')">Sign Up</button>
+</div>
+<form class="auth-form" id="authForm" onsubmit="handleAuth(event)">
+<label for="studentEmail">Email address</label>
+<input id="studentEmail" type="email" autocomplete="email" required placeholder="Enter your email address">
+<label for="studentPassword">Password</label>
+<input id="studentPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters">
+<button type="submit" id="authSubmitButton">Log In</button>
+<p id="authMessage" role="status" aria-live="polite"></p>
+</form>
+</div>
+
+<div id="signedInPanel">
+<p id="accountStatus"></p>
+<button type="button" class="secondary" onclick="handleLogout()">Log Out</button>
+</div>
+</div>
+
+<div class="premium-box">
+<h2>Premium SciSpark</h2>
+<p>Premium features will be available here. You can continue using all free quizzes without signing in.</p>
+<button type="button" onclick="openPremium()">Open Premium</button>
+<p id="premiumMessage" role="status" aria-live="polite"></p>
+<div id="premiumContent">You are signed in. The Premium quiz content and membership verification still need to be set up.</div>
+</div>
 </section>
 
 <section class="section" id="home">
@@ -96,6 +151,137 @@ footer{background:#103c3b;color:#d1e7e2;text-align:center;padding:25px;margin-to
 </footer>
 
 <script>
+/*
+  Replace these two placeholders with your Supabase Project URL
+  and publishable key. Never use a Supabase secret/service_role key here.
+*/
+const SUPABASE_URL = "https://gafmplravqjdbesbsjo.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_sy_pasCRXUnukDvdJEnIFw_XgjdHRZ0";
+
+let supabaseClient = null;
+let authMode = "login";
+
+function initializeSupabase(){
+ if(!window.supabase || !window.supabase.createClient){
+  setAuthMessage("The account service could not load. Please check your internet connection and refresh.");
+  return;
+ }
+ if(SUPABASE_URL === "PASTE_YOUR_PROJECT_URL_HERE" ||
+    SUPABASE_PUBLISHABLE_KEY === "PASTE_YOUR_PUBLISHABLE_KEY_HERE"){
+  setAuthMessage("Account setup is not connected yet. Free quizzes are ready to use.");
+  return;
+ }
+ try{
+  supabaseClient = window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+  supabaseClient.auth.getSession().then(({data,error})=>{
+   if(error){setAuthMessage("Could not check account status. Please try again.");return;}
+   updateAccountUI(data.session);
+  });
+  supabaseClient.auth.onAuthStateChange((_event,session)=>{
+   updateAccountUI(session);
+  });
+ }catch(error){
+  setAuthMessage("Account setup could not start. Please check the Supabase settings.");
+ }
+}
+
+function setAuthMessage(message){
+ const el=document.getElementById("authMessage");
+ if(el) el.textContent=message;
+}
+
+function showAuthForm(mode){
+ authMode=mode;
+ document.getElementById("authSubmitButton").textContent=mode==="signup"?"Create Account":"Log In";
+ document.getElementById("studentPassword").setAttribute("autocomplete",mode==="signup"?"new-password":"current-password");
+ document.getElementById("showLoginButton").className=mode==="login"?"":"secondary";
+ document.getElementById("showSignupButton").className=mode==="signup"?"":"secondary";
+ setAuthMessage("");
+}
+
+async function handleAuth(event){
+ event.preventDefault();
+ if(!supabaseClient){
+  setAuthMessage("Account setup is not connected yet. Free quizzes are still available.");
+  return;
+ }
+ const email=document.getElementById("studentEmail").value.trim();
+ const password=document.getElementById("studentPassword").value;
+ const submitButton=document.getElementById("authSubmitButton");
+ submitButton.disabled=true;
+ submitButton.textContent="Please wait...";
+ setAuthMessage("");
+
+ try{
+  if(authMode==="signup"){
+   const {data,error}=await supabaseClient.auth.signUp({
+    email:email,
+    password:password,
+    options:{emailRedirectTo:window.location.origin+window.location.pathname}
+   });
+   if(error) throw error;
+   if(data.session){
+    setAuthMessage("Your account has been created and you are signed in.");
+   }else{
+    setAuthMessage("Account created. Please check your email and confirm your address before logging in.");
+   }
+  }else{
+   const {error}=await supabaseClient.auth.signInWithPassword({email:email,password:password});
+   if(error) throw error;
+   setAuthMessage("You are now logged in.");
+  }
+ }catch(error){
+  setAuthMessage(error.message || "Something went wrong. Please try again.");
+ }finally{
+  submitButton.disabled=false;
+  submitButton.textContent=authMode==="signup"?"Create Account":"Log In";
+ }
+}
+
+function updateAccountUI(session){
+ const forms=document.getElementById("authForms");
+ const signedIn=document.getElementById("signedInPanel");
+ const status=document.getElementById("accountStatus");
+ if(session && session.user){
+  forms.style.display="none";
+  signedIn.style.display="block";
+  status.textContent="Signed in as "+session.user.email;
+ }else{
+  forms.style.display="block";
+  signedIn.style.display="none";
+  document.getElementById("premiumContent").style.display="none";
+ }
+}
+
+async function handleLogout(){
+ if(!supabaseClient) return;
+ const {error}=await supabaseClient.auth.signOut();
+ if(error) setAuthMessage("Could not log out. Please try again.");
+ document.getElementById("premiumMessage").textContent="";
+ document.getElementById("premiumContent").style.display="none";
+}
+
+async function openPremium(){
+ document.getElementById("premiumMessage").textContent="";
+ document.getElementById("premiumContent").style.display="none";
+ if(!supabaseClient){
+  document.getElementById("premiumMessage").textContent="Premium account access is not connected yet. Free quizzes remain open.";
+  return;
+ }
+ const {data,error}=await supabaseClient.auth.getSession();
+ if(error){
+  document.getElementById("premiumMessage").textContent="We could not check your login. Please try again.";
+  return;
+ }
+ if(!data.session){
+  document.getElementById("premiumMessage").textContent="Please sign up or log in to continue to Premium.";
+  document.getElementById("accountSection").scrollIntoView({behavior:"smooth"});
+  return;
+ }
+ document.getElementById("premiumMessage").textContent="Your account is signed in.";
+ document.getElementById("premiumContent").style.display="block";
+}
+
 const questions = {
 4: [
 {q:"Which part of a plant absorbs water from the soil?",o:["Leaves","Roots","Flowers","Fruits"],a:1,e:"Roots absorb water and minerals from the soil."},
@@ -121,7 +307,6 @@ const questions = {
 {q:"Which of these is a good conductor of electricity?",o:["Rubber","Plastic","Copper","Wood"],a:2,e:"Copper allows electric current to pass through it easily."},
 {q:"Which organisms act as decomposers?",o:["Fungi and bacteria","Birds and fish","Trees and grass","Insects and reptiles"],a:0,e:"Fungi and bacteria break down dead plants and animals."}
 ],
-
 6: [
 {q:"Which method is used to separate sand from water?",o:["Evaporation","Filtration","Churning","Handpicking"],a:1,e:"Filtration separates insoluble sand from water."},
 {q:"What does a balanced diet contain?",o:["Only proteins","Only carbohydrates","All essential nutrients in suitable amounts","Only fats and vitamins"],a:2,e:"A balanced diet contains all essential nutrients in suitable amounts."},
@@ -265,6 +450,8 @@ function goHome(){
  document.getElementById("result").style.display="none";
  window.scrollTo(0,0);
 }
+
+initializeSupabase();
 </script>
 </body>
 </html>
